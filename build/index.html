@@ -3,13 +3,30 @@
 
 <head>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js"></script>
+  <script src="./EmulatePBIHost.js"></script>
 </head>
 
 <body>
   <div id="app"></div>
   <script src="./App.js"></script>
   <script>
-   CustomVisualManager();
+    var data = []
+    d3.csv('./data-sample-gender-gen.csv', function (chartdata) {
+      //Preprocess test data   
+      chartdata = chartdata.map(function(d){
+        d["___VALUE___"] = +d["Value"]
+        delete d["Value"];
+
+        return d;
+      })
+      
+      //set data to global var and trigger an event
+      data = chartdata;
+      emulatePBIHostLifecycleEvent(CustomVisualManager, data);
+    })
+    window.onresize = function(){
+      emulatePBIHostLifecycleEvent(CustomVisualManager, data);
+    }
   </script>
 </body>
 

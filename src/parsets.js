@@ -1,3 +1,5 @@
+require ("d3");
+
 d3.parsets = function () {
   var event = d3.dispatch("sortDimensions", "sortCategories"),
     dimensions_ = autoDimensions,
@@ -11,6 +13,7 @@ d3.parsets = function () {
     tension = 1,
     tension0,
     duration = 500;
+var dNegOffset;
 
 
   function parsets(selection) {
@@ -560,17 +563,6 @@ d3.parsets = function () {
     var m = d3.mouse(body.node());
     var left = m[0] + 0;
     var top = m[1] - 20;
-    top = top - d3.select('#app').node().getBoundingClientRect().top || 0;
-    var aLeft = d3.select('#app').node().getBoundingClientRect().left;
-    var tLeft = left - aLeft;
-    if (tLeft < 75) {
-      left = aLeft + 85;
-    } else if (width > 600 && tLeft > width - 60) {
-      left = aLeft + width - 60;
-    } else if (tLeft > width - 40) {
-      left = aLeft + width - 40;
-    }
-
     /*
     tooltip
       .style("display", null)
@@ -718,7 +710,7 @@ d3.parsets = function () {
       t = d.target;
     var path = ribbonPathString(s.node.x0 + s.x0, s.dimension.y0, s.dx, t.node.x0 + t.x0, t.dimension.y0, t.dx, tension0)
     if (path == -1) {
-      console.log(d.source.node.name, '->', d.target.node.name, d)
+      //console.log(d.source.node.name, '->', d.target.node.name, d)
       return " "
     }
     return path;
@@ -828,7 +820,6 @@ function buildTree(root, data, dimensions, value) {
     }
     node.count += v;
   }
-  console.log(root)
   return root;
 }
 
@@ -879,29 +870,17 @@ function removePresident(d) {
 ////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////
 
-////////////////////////
-// Global variable space
-////////////////////////
+///////////////////////////
+// Top level variable space
+///////////////////////////
 var categoryHidden = [];
 var masterList = [];
 
 //////////////////////////////
 // Update chart when required
 //////////////////////////////
-function updateChart(data, topLabel) {
-  //temp start
-  /*
-  */
-  data = data.map(function (d) {
-    return {
-      "Years in Presidency": d["Years in Presidency"],
-      "Land Grant": d["Land Grant"],
-      "Gender": d["Gender"],
-    }
-  })
-  //temp end
-
-  d3.select('#app').selectAll('*').remove();
+export default function(domNodeSelector, data, topLabel) {
+  d3.select(domNodeSelector).selectAll('*').remove();
 
   var filteredData = data.map(function (d) {
     d['___TOP___'] = topLabel || "All";
@@ -918,9 +897,9 @@ function updateChart(data, topLabel) {
     return -1;
   }
 
-  var vis = d3.select("#app").append("svg");
-  var width = d3.select('#app').node().getBoundingClientRect().width - 20;
-  var height = d3.select('#app').node().getBoundingClientRect().height - 20;
+  var vis = d3.select(domNodeSelector).append("svg");
+  var width = d3.select(domNodeSelector).node().getBoundingClientRect().width - 20;
+  var height = d3.select(domNodeSelector).node().getBoundingClientRect().height - 20;
   var chart = d3.parsets()
   chart.width(width)
   chart.height(height)
