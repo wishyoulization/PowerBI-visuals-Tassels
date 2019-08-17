@@ -131,21 +131,21 @@ export class Visual implements IVisual {
         }
         const dataView = options.dataViews[0];
         const get = (p: string, d: any) => this.getProperty(dataView, 'displaySettings', p, d);
-        const colorHelper = (d: any) => this.host.colorPalette.getColor(d).value;
+        const colorHelper = (d: any) => { return { "solid": { "color": this.host.colorPalette.getColor(d).value } } };
         const props = this.customDisplayProperties = {
             top: get('top', 'All'),
             labelcolor: get("labelcolor", "#333333"),
             labeltextcolor: get("labeltextcolor", "#ffffff"),
-            color1: get("color1", colorHelper),
-            color2: get("color2", colorHelper),
-            color3: get("color3", colorHelper),
-            color4: get("color4", colorHelper),
-            color5: get("color5", colorHelper),
-            color6: get("color6", colorHelper),
-            color7: get("color7", colorHelper),
-            color8: get("color8", colorHelper),
-            color9: get("color9", colorHelper),
-            color10: get("color10", colorHelper)
+            color1: get("color1", colorHelper).solid.color,
+            color2: get("color2", colorHelper).solid.color,
+            color3: get("color3", colorHelper).solid.color,
+            color4: get("color4", colorHelper).solid.color,
+            color5: get("color5", colorHelper).solid.color,
+            color6: get("color6", colorHelper).solid.color,
+            color7: get("color7", colorHelper).solid.color,
+            color8: get("color8", colorHelper).solid.color,
+            color9: get("color9", colorHelper).solid.color,
+            color10: get("color10", colorHelper).solid.color
         }
 
         console.log('Visual update', options);

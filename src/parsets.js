@@ -123,6 +123,7 @@ d3.parsets = function () {
         textEnter.append("tspan")
           .attr("class", "name")
           .text(dimensionFormatName)
+          .style('fill', globalCustomization.categoryfillcolor || "#000000");
         textEnter.append("tspan")
           .attr("class", "sort alpha")
           .attr("dx", "2em")
@@ -258,13 +259,12 @@ d3.parsets = function () {
             d.source.x0 = d.source.x;
             d.target.x0 = d.target.x;
           })
-          .attr("class", function (d) {
+          .style("fill", function (d) {
             //Alok: For making top row grey!
-            var topRow = '';
             if (d.parent.dimension == '___TOP___' && dimensions.length > 2) {
-              topRow = ' toprow'
+              return "rgb(187, 188, 188)";
             };
-            return "category-" + d.major + topRow;
+            return globalCustomization.colors[d.major % 10]
           })
           .attr("d", ribbonPath);
         ribbon.sort(function (a, b) { return b.count - a.count; });
@@ -470,13 +470,15 @@ d3.parsets = function () {
           .attr("dx", ".2em");
         category.select("rect")
           .attr("width", function (d) { return d.dx; })
-          .attr("class", function (d) {
-            return "category-" + (d.dimension === dimensions[0] ? ordinal(d.name) : "background");
-          });
+          //.attr("class", function (d) {
+          //return "category-" + (d.dimension === dimensions[0] ? ordinal(d.name) : "background");
+          //})
+          .style('fill', globalCustomization.categoryfillcolor || "#000000");
         category.select("line")
           .attr("x2", function (d) { return d.dx; });
         category.select("text")
-          .text(truncateText(function (d) { return d.name; }, function (d) { return d.dx; }));
+          .text(truncateText(function (d) { return d.name; }, function (d) { return d.dx; }))
+          .style('fill', globalCustomization.categoryfontcolor || "#ffffff");
 
         //Alok: For custom turn on off feature;
         category.filter(removePresident).on('click', categoryClick)
@@ -875,18 +877,20 @@ function removePresident(d) {
 ///////////////////////////
 var categoryHidden = [];
 var masterList = [];
+var globalCustomization;
 
 //////////////////////////////
 // Update chart when required
 //////////////////////////////
-export default function (domNodeSelector, data, topLabel) {
+export default function (domNodeSelector, data, customization) {
   d3.select(domNodeSelector).selectAll('*').remove();
 
   var filteredData = data.map(function (d) {
-    d['___TOP___'] = topLabel || "All";
+    d['___TOP___'] = customization.overall || "";
     return d;
   });
   masterList = ["___TOP___"];
+  globalCustomization = customization
   Object.keys(filteredData[0]).map(function (d, i) {
     if (d !== "___TOP___" && d !== "___VALUE___") {
       masterList.push(d);
@@ -898,8 +902,8 @@ export default function (domNodeSelector, data, topLabel) {
   }
 
   var vis = d3.select(domNodeSelector).append("svg");
-  var width = d3.select(domNodeSelector).node().getBoundingClientRect().width - 20;
-  var height = d3.select(domNodeSelector).node().getBoundingClientRect().height - 20;
+  var width = d3.select(domNodeSelector).node().getBoundingClientRect().width - 8;
+  var height = d3.select(domNodeSelector).node().getBoundingClientRect().height - 8;
   var chart = d3.parsets()
   chart.width(width)
   chart.height(height)

@@ -22,10 +22,10 @@ var config = {
         hide: function () { },
         move: function () { }
     },
-    custom:{
-        colors: [],
-        categoryfillcolor: "",
-        categoryfontcolor: "",
+    custom: {
+        colors: ["#c51617", "#ef5205", "#ffc83d", "#0c907d", "#3eb1cc", "#5651ff", "#333333", "#4f4f4f", "#828282", "#bdbdbd",],
+        categoryfillcolor: "#444444",
+        categoryfontcolor: "#ffffff",
         overall: "All"
     },
     edit: false

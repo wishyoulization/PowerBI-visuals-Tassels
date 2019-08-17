@@ -24,10 +24,9 @@ html {
 
 /*ALOK PBI*/
 #app {
-  background-color: rgb(255, 255, 255);
   width: 100%;
   height: 100%;
-  padding: 10px;
+  padding: 4px;
 }
 .dimension {
   cursor: ns-resize;
@@ -82,59 +81,6 @@ html {
 .ribbon-mouse path {
   fill-opacity: 0;
 }
-.category-0 {
-  fill: #c51617;
-}
-.category-1 {
-  fill: #ef5205;
-}
-.category-2 {
-  fill: #ffc83d;
-}
-.category-3 {
-  fill: #0c907d;
-}
-.category-4 {
-  fill: #3eb1cc;
-}
-.category-5 {
-  fill: #5651ff;
-}
-.category-6 {
-  fill: #333333;
-}
-.category-7 {
-  fill: #4f4f4f;
-}
-.category-8 {
-  fill: #828282;
-}
-.category-9 {
-  fill: #bdbdbd;
-}
-.toprow {
-  fill: rgb(187, 188, 188);
-}
-.tooltip {
-  background-color: rgba(255, 255, 255, 0.95);
-  position: absolute;
-  padding: 5px;
-  min-width: 150px;
-  max-width: 150px;
-  transform: translate(-50%, -90%);
-  border-radius: 4px;
-  border: 1px solid;
-  text-align: center;
-  overflow-x: hidden;
-}
-.sorthint {
-  cursor: pointer;
-  fill: rgb(1, 33, 105);
-  font-size: 11px;
-}
-.sorthint:hover {
-  fill: rgb(0, 118, 168);
-}
 svg {
   overflow: visible !important;
 }
@@ -156,7 +102,6 @@ g.category text {
 }
 .category.hiddenDUPRibbon text,
 .category text {
-  fill: rgb(255, 255, 255) !important;
 }
 .category.hiddenDUPRibbon rect {
   fill: rgb(117, 120, 123) !important;
@@ -171,6 +116,5 @@ rect.category-0 {
 }
 .category:first-child:hover text,
 .category:first-child text {
-  fill: rgb(255, 255, 255) !important;
   font-weight: 700 !important;
 }
