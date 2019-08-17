@@ -913,6 +913,7 @@ export default function (domNodeSelector, data, customization) {
   chart.dimensions(masterList);
   chart.width(width)
   chart.height(height)
+  chart.dimensionFormat((d)=>d.replace(/\^\d+$/,""))
   vis.attr("width", chart.width())
   vis.attr("height", chart.height())
   vis.datum(filteredData)

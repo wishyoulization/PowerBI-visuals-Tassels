@@ -72,20 +72,7 @@ export class Visual implements IVisual {
 
         return {
             metadata: metadata,
-            rows: dataView.table.rows,
-
-            tempData: dataView.table.rows.map(function (row) {
-                let t = {};
-                row.map(function (d, i) {
-                    let m = metadata[i];
-                    let n = m.name;
-                    if (m.table === null) {
-                        n = "___VALUE___";
-                    }
-                    t[n] = d
-                })
-                return t;
-            })
+            rows: dataView.table.rows
         };
     }
 
@@ -134,8 +121,8 @@ export class Visual implements IVisual {
         const colorHelper = (d: any) => { return { "solid": { "color": this.host.colorPalette.getColor(d).value } } };
         const props = this.customDisplayProperties = {
             top: get('top', 'All'),
-            labelcolor: get("labelcolor", "#333333"),
-            labeltextcolor: get("labeltextcolor", "#ffffff"),
+            labelcolor: get("labelcolor", {"solid":{"color":"#333333"}}).solid.color,
+            labeltextcolor: get("labeltextcolor", {"solid":{"color":"#ffffff"}}).solid.color,
             color1: get("color1", colorHelper).solid.color,
             color2: get("color2", colorHelper).solid.color,
             color3: get("color3", colorHelper).solid.color,
@@ -149,7 +136,7 @@ export class Visual implements IVisual {
         }
 
         console.log('Visual update', options);
-        (window as any).CustomVisualManager(this.getObjectFromDataView(options.dataViews[0]).tempData, {
+        (window as any).CustomVisualManager(this.getObjectFromDataView(options.dataViews[0]).metadata,this.getObjectFromDataView(options.dataViews[0]).rows, {
             persist: {
                 get: () => this.getPersist(dataView),
                 set: this.setPersist.bind(this)

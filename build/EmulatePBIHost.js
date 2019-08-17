@@ -31,6 +31,6 @@ var config = {
     edit: false
 };
 
-var emulatePBIHostLifecycleEvent = function (CustomVisualManager, data) {
-    CustomVisualManager(data, config);
+var emulatePBIHostLifecycleEvent = function (CustomVisualManager, meta, rows) {
+    CustomVisualManager(meta, rows, config);
 };
