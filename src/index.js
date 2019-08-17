@@ -13,7 +13,8 @@ window.CustomVisualManager = function (metadata, rows, config) {
     overall: config.custom.overall,
     colors: config.custom.colors,
     categoryfillcolor: config.custom.categoryfillcolor,
-    categoryfontcolor: config.custom.categoryfontcolor
+    categoryfontcolor: config.custom.categoryfontcolor,
+    persist: config.persist
   };
   parsets('#app', data, customizationLayer)
 };

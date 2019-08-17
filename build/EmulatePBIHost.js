@@ -1,10 +1,12 @@
+window.persist = {};
 var config = {
     persist: {
         get: function () {
-            return {}
+            return window.persist
         },
         set: function (d) {
-            //console.log('created settings:', JSON.stringify(d));
+            console.log('created settings:', JSON.stringify(d));
+            window.persist = d;
             return true;
         },
     },

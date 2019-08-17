@@ -206,6 +206,7 @@ d3.parsets = function () {
               });//removed changed check.. and click dispatch. any impact?
               if (JSON.stringify(masterList) != JSON.stringify(listOfNewDimensionOrder)) {
                 console.log('Dimension order', listOfNewDimensionOrder)
+                globalCustomization.persist.set({ order: listOfNewDimensionOrder })
               }
               //reapply category hides..
               g.selectAll('g.category').each(function (gc) {
@@ -884,13 +885,13 @@ var globalCustomization;
 //////////////////////////////
 export default function (domNodeSelector, data, customization) {
   d3.select(domNodeSelector).selectAll('*').remove();
+  globalCustomization = customization
+  masterList = ["___TOP___"];
 
   var filteredData = data.map(function (d) {
     d['___TOP___'] = customization.overall || "";
     return d;
   });
-  masterList = ["___TOP___"];
-  globalCustomization = customization
   Object.keys(filteredData[0]).map(function (d, i) {
     if (d !== "___TOP___" && d !== "___VALUE___") {
       masterList.push(d);
@@ -900,6 +901,19 @@ export default function (domNodeSelector, data, customization) {
   if (data.length == 0 || masterList.length < 2) {
     return -1;
   }
+
+  //Apply a stored list..
+  var storedList = globalCustomization.persist.get() && globalCustomization.persist.get().order || [];
+  var problemDetected = false;
+  storedList.map(d => {
+    if (masterList.indexOf[d] == -1) {
+      problemDetected = true;
+    }
+  })
+  if (storedList.length == masterList.length && !problemDetected) {
+    masterList = storedList
+  }
+
 
   var vis = d3.select(domNodeSelector).append("svg");
   var width = d3.select(domNodeSelector).node().getBoundingClientRect().width - 8;
@@ -913,7 +927,7 @@ export default function (domNodeSelector, data, customization) {
   chart.dimensions(masterList);
   chart.width(width)
   chart.height(height)
-  chart.dimensionFormat((d)=>d.replace(/\^\d+$/,""))
+  chart.dimensionFormat((d) => d.replace(/\^\d+$/, ""))
   vis.attr("width", chart.width())
   vis.attr("height", chart.height())
   vis.datum(filteredData)
