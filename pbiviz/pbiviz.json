@@ -1,8 +1,8 @@
 {
     "visual": {
-        "name": "pbiviz",
-        "displayName": "pbiviz",
-        "guid": "pbiviz1A820A97C32F4A3B8E1A4BB23A33FA36",
+        "name": "Tassels Parallel Sets Slicer",
+        "displayName": "Tassels Parallel Sets Slicer",
+        "guid": "wishyoulizationtassels",
         "visualClassName": "Visual",
         "version": "1.0.0",
         "description": "A parallel sets based visual slicer to see the data tasseled by ordinal groups.",

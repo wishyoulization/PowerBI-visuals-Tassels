@@ -1,22 +1,48 @@
 {
     "dataRoles": [
         {
-            "displayName": "Category Data",
-            "name": "category",
+            "displayName": "Columns",
+            "name": "fields",
             "kind": "Grouping"
         },
         {
-            "displayName": "Measure Data",
-            "name": "measure",
+            "displayName": "Value",
+            "name": "value",
             "kind": "Measure"
         }
     ],
     "objects": {
-        "dataPoint": {
-            "displayName": "Data colors",
+        "general": {
+            "displayName": "General",
             "properties": {
-                "defaultColor": {
-                    "displayName": "Default color",
+                "persist": {
+                    "type": {
+                        "text": true
+                    }
+                },
+                "filter": {
+                    "type": {
+                        "filter": true
+                    }
+                },      
+                "selfFilter": {
+                    "type": {
+                        "filter": {
+                            "selfFilter": true
+                        }
+                    }
+                }
+            }
+        },
+        "displaySettings": {
+            "displayName": "Wishyoulization Settings",
+            "properties": {
+                "top": {
+                    "type": {
+                        "text": true
+                    }
+                },
+                "labelcolor": {
                     "type": {
                         "fill": {
                             "solid": {
@@ -25,14 +51,7 @@
                         }
                     }
                 },
-                "showAllDataPoints": {
-                    "displayName": "Show all",
-                    "type": {
-                        "bool": true
-                    }
-                },
-                "fill": {
-                    "displayName": "Fill",
+                "labeltextcolor": {
                     "type": {
                         "fill": {
                             "solid": {
@@ -41,44 +60,143 @@
                         }
                     }
                 },
-                "fillRule": {
-                    "displayName": "Color saturation",
+                "color1": {
                     "type": {
-                        "fill": {}
+                        "fill": {
+                            "solid": {
+                                "color": true
+                            }
+                        }
                     }
                 },
-                 "fontSize": {
-                    "displayName": "Text Size",
+                "color2": {
                     "type": {
-                        "formatting": {
-                            "fontSize": true
+                        "fill": {
+                            "solid": {
+                                "color": true
+                            }
+                        }
+                    }
+                },
+                "color3": {
+                    "type": {
+                        "fill": {
+                            "solid": {
+                                "color": true
+                            }
+                        }
+                    }
+                },
+                "color4": {
+                    "type": {
+                        "fill": {
+                            "solid": {
+                                "color": true
+                            }
+                        }
+                    }
+                },
+                "color5": {
+                    "type": {
+                        "fill": {
+                            "solid": {
+                                "color": true
+                            }
+                        }
+                    }
+                },
+                "color6": {
+                    "type": {
+                        "fill": {
+                            "solid": {
+                                "color": true
+                            }
+                        }
+                    }
+                },
+                "color7": {
+                    "type": {
+                        "fill": {
+                            "solid": {
+                                "color": true
+                            }
+                        }
+                    }
+                },
+                "color8": {
+                    "type": {
+                        "fill": {
+                            "solid": {
+                                "color": true
+                            }
+                        }
+                    }
+                },
+                "color9": {
+                    "type": {
+                        "fill": {
+                            "solid": {
+                                "color": true
+                            }
+                        }
+                    }
+                },
+                "color10": {
+                    "type": {
+                        "fill": {
+                            "solid": {
+                                "color": true
+                            }
                         }
                     }
                 }
             }
         }
     },
-    "dataViewMappings": [
-        {
-            "categorical": {
-                "categories": {
-                    "for": {
-                        "in": "category"
-                    },
-                    "dataReductionAlgorithm": {
-                        "top": {}
-                    }
+    "sorting": {
+        "default": {}
+    },
+    "tooltips": {
+        "supportedTypes": {
+            "default": true,
+            "canvas": true
+        },
+        "roles": [
+            "tooltips"
+        ]
+    },
+    "dataViewMappings": [{
+        "conditions": [
+            {
+                "fields": {
+                    "max": 10
                 },
-                "values": {
-                    "select": [
-                        {
-                            "bind": {
-                                "to": "measure"
-                            }
-                        }
-                    ]
+                "value": {
+                    "max": 1
                 }
             }
+        ],
+        "table": {
+            "rows": {
+                "dataReductionAlgorithm": {
+                    "top": {
+                        "count": 30000
+                    }
+                },
+                "select": [
+                    {
+                        "for": {
+                            "in": "fields"
+                        }
+                    },
+                    {
+                        "for": {
+                            "in": "value"
+                        }
+                    }
+                ]
+            }
         }
-    ]
+    }],
+    "advancedEditModeSupport": 0
 }
