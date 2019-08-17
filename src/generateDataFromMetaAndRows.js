@@ -1,3 +1,5 @@
+import { type } from "os";
+
 export default function generateDataFromMetaAndRows(metadata, rows) {
   let value_index = null;
   const default_value = 1;
@@ -14,6 +16,7 @@ export default function generateDataFromMetaAndRows(metadata, rows) {
     let cat_in_dim_and_total = {};
     let collapsed = [];
     let uncollapsed = [];
+    let isNumber = typeof rows[0][i] == "number";
     if (value_index != i) {
       for (var j = 0; j < rows.length; j++) {
         if (typeof cat_in_dim_and_total[rows[j][i]] === "undefined") {
@@ -33,6 +36,7 @@ export default function generateDataFromMetaAndRows(metadata, rows) {
         }
       });
     }
+    metadata[i]["isNumber"] = isNumber;
     metadata[i]["collapsed"] = collapsed;
     metadata[i]["uncollapsed"] = uncollapsed;
   };

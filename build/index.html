@@ -26,8 +26,8 @@
       });
       Object.keys(chartdata[0]).map(function (d) {
         meta.push({
-          table: d !== "_measure" ? "foo" : null,
-          column: d !== "_measure" ? "bar" : null,
+          table: d !== "_measure" ? d : null,
+          column: d !== "_measure" ? d : null,
           name: d,
           roles: ["hello"]
         })

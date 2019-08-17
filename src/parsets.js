@@ -208,9 +208,9 @@ d3.parsets = function () {
                 console.log('Dimension order', listOfNewDimensionOrder)
                 globalCustomization.persist.set({ order: listOfNewDimensionOrder })
               }
-              //reapply category hides..
+              //reapply category hides when dragging..
               g.selectAll('g.category').each(function (gc) {
-                var thisTmp = gc.dimension.name + '|' + gc.name;
+                var thisTmp = JSON.stringify([gc.dimension.name, gc.name]);
                 if (categoryHidden.indexOf(thisTmp) > -1) {
                   categoryHidden.splice(categoryHidden.indexOf(thisTmp), 1);
                   categoryClick.bind(this)(gc);
@@ -310,8 +310,7 @@ d3.parsets = function () {
       }
 
       function categoryClick(d) {
-        var tmpThis = d.dimension.name + '|' + d.name;
-        console.log('filter', 'toggle category ' + tmpThis, 'click');
+        var tmpThis = JSON.stringify([d.dimension.name, d.name]);
         if (categoryHidden.indexOf(tmpThis) > -1) {
           d.nodes.forEach(function (nd) { unhide(nd); })
           categoryHidden.splice(categoryHidden.indexOf(tmpThis), 1);
@@ -322,6 +321,16 @@ d3.parsets = function () {
           d3.select(this).classed('hiddenDUPRibbon', true);
         }
         updateRibbons();
+        if (d3.event && d3.event.type && d3.event.type == "click") {
+          //console.log('filter', 'toggle category ' + tmpThis, 'click');
+          globalCustomization.filterHelper.set(categoryHidden.map(h => {
+            let t = JSON.parse(h);
+            return {
+              metaindex: +t[0].replace(/.*(?=\^\d+$)/, "").replace("^", ""),
+              category: t[1]
+            }
+          }));
+        }
       }
 
       function unhide(d, ancestors) {
@@ -484,6 +493,14 @@ d3.parsets = function () {
         //Alok: For custom turn on off feature;
         category.filter(removePresident).on('click', categoryClick)
         // - - 
+        //reapply category hides when initial loading too..
+        g.selectAll('g.category').each(function (gc) {
+          var thisTmp = JSON.stringify([gc.dimension.name, gc.name]);
+          if (categoryHidden.indexOf(thisTmp) > -1) {
+            categoryHidden.splice(categoryHidden.indexOf(thisTmp), 1);
+            categoryClick.bind(this)(gc);
+          }
+        });
       }
     });
   }
@@ -901,7 +918,8 @@ export default function (domNodeSelector, data, customization) {
   if (data.length == 0 || masterList.length < 2) {
     return -1;
   }
-
+  categoryHidden = globalCustomization.filterHelper.get();
+  console.log(categoryHidden)
   //Apply a stored list..
   var storedList = globalCustomization.persist.get() && globalCustomization.persist.get().order || [];
   var problemDetected = false;

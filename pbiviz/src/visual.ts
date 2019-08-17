@@ -121,8 +121,8 @@ export class Visual implements IVisual {
         const colorHelper = (d: any) => { return { "solid": { "color": this.host.colorPalette.getColor(d).value } } };
         const props = this.customDisplayProperties = {
             top: get('top', 'All'),
-            labelcolor: get("labelcolor", {"solid":{"color":"#333333"}}).solid.color,
-            labeltextcolor: get("labeltextcolor", {"solid":{"color":"#ffffff"}}).solid.color,
+            labelcolor: get("labelcolor", { "solid": { "color": "#333333" } }).solid.color,
+            labeltextcolor: get("labeltextcolor", { "solid": { "color": "#ffffff" } }).solid.color,
             color1: get("color1", colorHelper).solid.color,
             color2: get("color2", colorHelper).solid.color,
             color3: get("color3", colorHelper).solid.color,
@@ -136,12 +136,17 @@ export class Visual implements IVisual {
         }
 
         console.log('Visual update', options);
-        (window as any).CustomVisualManager(this.getObjectFromDataView(options.dataViews[0]).metadata,this.getObjectFromDataView(options.dataViews[0]).rows, {
+        (window as any).CustomVisualManager(this.getObjectFromDataView(options.dataViews[0]).metadata, this.getObjectFromDataView(options.dataViews[0]).rows, {
             persist: {
                 get: () => this.getPersist(dataView),
                 set: this.setPersist.bind(this)
             },
-            filter: {},
+            filter: {
+                get: () => options.jsonFilters,
+                set: (filters: powerbi.IFilter[]) => {
+                    this.host.applyJsonFilter(filters, "general", "filter", powerbi.FilterAction.merge);
+                },
+            },
             custom: {
                 colors: [props.color1, props.color2, props.color3, props.color4, props.color5, props.color6, props.color7, props.color8, props.color9, props.color10],
                 categoryfillcolor: props.labelcolor,
