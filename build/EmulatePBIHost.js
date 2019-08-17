@@ -22,6 +22,12 @@ var config = {
         hide: function () { },
         move: function () { }
     },
+    custom:{
+        colors: [],
+        categoryfillcolor: "",
+        categoryfontcolor: "",
+        overall: "All"
+    },
     edit: false
 };
 

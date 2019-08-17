@@ -105,6 +105,23 @@ export class Visual implements IVisual {
         }
     }
 
+    private getPersist(dataView: DataView) {
+        return JSON.parse((dataView &&
+            dataView.metadata.objects &&
+            dataView.metadata.objects.general &&
+            dataView.metadata.objects.general.persist as string) || "{}");
+    }
+
+    private setPersist(props: any) {
+        return this.host.persistProperties({
+            merge: [{
+                objectName: "general",
+                selector: null,
+                properties: { "persist": JSON.stringify(props) || "" },
+            }]
+        });
+    }
+
     public update(options: VisualUpdateOptions) {
         if (!options
             || !options.dataViews
@@ -133,7 +150,10 @@ export class Visual implements IVisual {
 
         console.log('Visual update', options);
         (window as any).CustomVisualManager(this.getObjectFromDataView(options.dataViews[0]).tempData, {
-            persist: {},
+            persist: {
+                get: () => this.getPersist(dataView),
+                set: this.setPersist.bind(this)
+            },
             filter: {},
             custom: {
                 colors: [props.color1, props.color2, props.color3, props.color4, props.color5, props.color6, props.color7, props.color8, props.color9, props.color10],
