@@ -1,4 +1,4 @@
-require ("d3");
+require("d3");
 
 d3.parsets = function () {
   var event = d3.dispatch("sortDimensions", "sortCategories"),
@@ -13,7 +13,7 @@ d3.parsets = function () {
     tension = 1,
     tension0,
     duration = 500;
-var dNegOffset;
+  var dNegOffset;
 
 
   function parsets(selection) {
@@ -597,7 +597,7 @@ var dNegOffset;
     if (nd == 2) {
       //When only one is selected regular chart, no change
     } else {
-      dNegOffset = 400 / nd; //Adjust the height of the first row
+      dNegOffset = d3.min([400 / nd, (height) / (nd)]); //Adjust the height of the first row
       dy = (height - dNegOffset - 2) / (nd - 2); //calculate the height for each other row
     }
     dimensions.forEach(function (d, i) {
@@ -879,7 +879,7 @@ var masterList = [];
 //////////////////////////////
 // Update chart when required
 //////////////////////////////
-export default function(domNodeSelector, data, topLabel) {
+export default function (domNodeSelector, data, topLabel) {
   d3.select(domNodeSelector).selectAll('*').remove();
 
   var filteredData = data.map(function (d) {
