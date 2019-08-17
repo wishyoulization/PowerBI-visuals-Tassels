@@ -28,6 +28,7 @@ import VisualUpdateOptions = powerbi.extensibility.visual.VisualUpdateOptions;
 export class Visual implements IVisual {
     private host: IVisualHost;
     private colorPalette: IColorPalette;
+    private customDisplayProperties: any;
 
     constructor(options: VisualConstructorOptions) {
         this.host = options.host;
@@ -88,6 +89,22 @@ export class Visual implements IVisual {
         };
     }
 
+    private getProperty(dataview: DataView, obName: string, propName: string, defValue: any) {
+        if (dataview &&
+            dataview.metadata &&
+            dataview.metadata.objects &&
+            dataview.metadata.objects[obName] &&
+            typeof dataview.metadata.objects[obName][propName] !== "undefined") {
+            return dataview.metadata.objects[obName][propName];
+        } else {
+            //if defValue is a function call it instead of directly sending it
+            if (defValue && {}.toString.call(defValue) === '[object Function]') {
+                return defValue(propName);
+            }
+            return defValue;
+        }
+    }
+
     public update(options: VisualUpdateOptions) {
         if (!options
             || !options.dataViews
@@ -95,8 +112,36 @@ export class Visual implements IVisual {
         ) {
             return;
         }
+        const dataView = options.dataViews[0];
+        const get = (p: string, d: any) => this.getProperty(dataView, 'displaySettings', p, d);
+        const colorHelper = (d: any) => this.host.colorPalette.getColor(d).value;
+        const props = this.customDisplayProperties = {
+            top: get('top', 'All'),
+            labelcolor: get("labelcolor", "#333333"),
+            labeltextcolor: get("labeltextcolor", "#ffffff"),
+            color1: get("color1", colorHelper),
+            color2: get("color2", colorHelper),
+            color3: get("color3", colorHelper),
+            color4: get("color4", colorHelper),
+            color5: get("color5", colorHelper),
+            color6: get("color6", colorHelper),
+            color7: get("color7", colorHelper),
+            color8: get("color8", colorHelper),
+            color9: get("color9", colorHelper),
+            color10: get("color10", colorHelper)
+        }
+
         console.log('Visual update', options);
-        (window as any).CustomVisualManager(this.getObjectFromDataView(options.dataViews[0]).tempData);
+        (window as any).CustomVisualManager(this.getObjectFromDataView(options.dataViews[0]).tempData, {
+            persist: {},
+            filter: {},
+            custom: {
+                colors: [props.color1, props.color2, props.color3, props.color4, props.color5, props.color6, props.color7, props.color8, props.color9, props.color10],
+                categoryfillcolor: props.labelcolor,
+                categoryfontcolor: props.labeltextcolor,
+                overall: props.top
+            }
+        });
     }
 
 
@@ -106,6 +151,21 @@ export class Visual implements IVisual {
      *
      */
     public enumerateObjectInstances(options: EnumerateVisualObjectInstancesOptions): VisualObjectInstance[] | VisualObjectInstanceEnumerationObject {
-        return;
+        let objectName = options.objectName;
+        let objectEnumeration: VisualObjectInstance[] = [];
+        switch (objectName) {
+            case "general":
+                // ignore
+                break;
+            case "displaySettings":
+                objectEnumeration.push({
+                    objectName: objectName,
+                    displayName: "Wishyoulization Settings",
+                    properties: this.customDisplayProperties,
+                    selector: null
+                });
+                break;
+        }
+        return objectEnumeration;
     }
 }

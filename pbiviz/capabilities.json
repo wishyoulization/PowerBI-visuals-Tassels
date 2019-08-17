@@ -38,11 +38,13 @@
             "displayName": "Wishyoulization Settings",
             "properties": {
                 "top": {
+                    "displayName": "Top Row Label",
                     "type": {
                         "text": true
                     }
                 },
                 "labelcolor": {
+                    "displayName": "Category Filter Background Color",
                     "type": {
                         "fill": {
                             "solid": {
@@ -52,6 +54,7 @@
                     }
                 },
                 "labeltextcolor": {
+                    "displayName": "Category Filter Text Color",
                     "type": {
                         "fill": {
                             "solid": {
@@ -61,6 +64,7 @@
                     }
                 },
                 "color1": {
+                    "displayName": "Color 1",
                     "type": {
                         "fill": {
                             "solid": {
@@ -70,6 +74,7 @@
                     }
                 },
                 "color2": {
+                    "displayName": "Color 2",
                     "type": {
                         "fill": {
                             "solid": {
@@ -79,6 +84,7 @@
                     }
                 },
                 "color3": {
+                    "displayName": "Color 3",
                     "type": {
                         "fill": {
                             "solid": {
@@ -88,6 +94,7 @@
                     }
                 },
                 "color4": {
+                    "displayName": "Color 4",
                     "type": {
                         "fill": {
                             "solid": {
@@ -97,6 +104,7 @@
                     }
                 },
                 "color5": {
+                    "displayName": "Color 5",
                     "type": {
                         "fill": {
                             "solid": {
@@ -106,6 +114,7 @@
                     }
                 },
                 "color6": {
+                    "displayName": "Color 6",
                     "type": {
                         "fill": {
                             "solid": {
@@ -115,6 +124,7 @@
                     }
                 },
                 "color7": {
+                    "displayName": "Color 7",
                     "type": {
                         "fill": {
                             "solid": {
@@ -124,6 +134,7 @@
                     }
                 },
                 "color8": {
+                    "displayName": "Color 8",
                     "type": {
                         "fill": {
                             "solid": {
@@ -133,6 +144,7 @@
                     }
                 },
                 "color9": {
+                    "displayName": "Color 9",
                     "type": {
                         "fill": {
                             "solid": {
@@ -142,6 +154,7 @@
                     }
                 },
                 "color10": {
+                    "displayName": "Color 10",
                     "type": {
                         "fill": {
                             "solid": {
@@ -152,9 +165,6 @@
                 }
             }
         }
-    },
-    "sorting": {
-        "default": {}
     },
     "tooltips": {
         "supportedTypes": {
