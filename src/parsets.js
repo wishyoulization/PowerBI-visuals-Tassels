@@ -205,7 +205,6 @@ d3.parsets = function () {
                 listOfNewDimensionOrder.push(d.name);
               });//removed changed check.. and click dispatch. any impact?
               if (JSON.stringify(masterList) != JSON.stringify(listOfNewDimensionOrder)) {
-                console.log('Dimension order', listOfNewDimensionOrder)
                 globalCustomization.persist.set({ order: listOfNewDimensionOrder })
               }
               //reapply category hides when dragging..
@@ -322,7 +321,6 @@ d3.parsets = function () {
         }
         updateRibbons();
         if (d3.event && d3.event.type && d3.event.type == "click") {
-          //console.log('filter', 'toggle category ' + tmpThis, 'click');
           globalCustomization.filterHelper.set(categoryHidden.map(h => {
             let t = JSON.parse(h);
             return {
@@ -732,7 +730,6 @@ d3.parsets = function () {
       t = d.target;
     var path = ribbonPathString(s.node.x0 + s.x0, s.dimension.y0, s.dx, t.node.x0 + t.x0, t.dimension.y0, t.dx, tension0)
     if (path == -1) {
-      //console.log(d.source.node.name, '->', d.target.node.name, d)
       return " "
     }
     return path;
@@ -907,6 +904,10 @@ export default function (domNodeSelector, data, customization) {
   globalCustomization = customization
   masterList = ["___TOP___"];
 
+  //Report drawing start
+  globalCustomization.renderEventsAPI("start");
+
+
   var filteredData = data.map(function (d) {
     d['___TOP___'] = customization.overall || "";
     return d;
@@ -918,6 +919,8 @@ export default function (domNodeSelector, data, customization) {
   })
   masterList = masterList.filter((d, i) => i < 11)
   if (data.length == 0 || masterList.length < 2) {
+    //Report drawing fail
+    globalCustomization.renderEventsAPI("fail");
     return -1;
   }
   categoryHidden = globalCustomization.filterHelper.get();
@@ -943,7 +946,7 @@ export default function (domNodeSelector, data, customization) {
   chart.height(height)
   chart.tension(0.75)
   chart.spacing(50)
-  chart.value(function (d) { return d["___VALUE___"] || 1; })//make this optional based on the measure being used..
+  chart.value(function (d) { return d["___VALUE___"] });
   chart.dimensions(masterList);
   chart.width(width)
   chart.height(height)
@@ -952,4 +955,7 @@ export default function (domNodeSelector, data, customization) {
   vis.attr("height", chart.height())
   vis.datum(filteredData)
   vis.call(chart)
+
+  //Report drawing complete
+  globalCustomization.renderEventsAPI("finished");
 }

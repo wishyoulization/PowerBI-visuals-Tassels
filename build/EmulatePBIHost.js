@@ -6,6 +6,9 @@ persist = { order: ["___TOP___", "age^2", "Carnegie a Classification^3", "Genera
 filters = [{ "$schema": "http://powerbi.com/product/schema#basic", "filterType": 1, "operator": "In", "target": { "table": "Carnegie Classification", "column": "Carnegie Classification" }, "values": ["Baccalaureate Colleges: Arts & Sciences Focus", "Baccalaureate Colleges: Diverse Fields", "Master's Colleges & Universities: Medium Programs"] }];
 
 var config = {
+    renderEventsAPI: function (d) {
+        console.log("Rendering event:", d);
+    },
     persist: {
         get: function () {
             return window.persist

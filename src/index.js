@@ -7,7 +7,7 @@ import { default as generateDataFromMetaAndRows } from "./generateDataFromMetaAn
 
 window.CustomVisualManager = function (metadata, rows, config) {
   const { data, mappedmeta } = generateDataFromMetaAndRows(metadata, rows);
-  console.log(data, mappedmeta);
+
   const customizationLayer = {
     overall: config.custom.overall,
     colors: config.custom.colors,
@@ -15,6 +15,7 @@ window.CustomVisualManager = function (metadata, rows, config) {
     categoryfontcolor: config.custom.categoryfontcolor,
     persist: config.persist,
     tooltip: config.visualHostTooltipService,
+    renderEventsAPI: config.renderEventsAPI,
     filterHelper: {
       set: function (group) {
         let filters = createFilterFromList(group, mappedmeta);
@@ -33,9 +34,12 @@ window.CustomVisualManager = function (metadata, rows, config) {
       }
     }
   };
+
+  //Call the D3 component that renders the actual visual...
   parsets('#app', data, customizationLayer)
 };
 
+//Create a powerbi-models filter array from a list of strings sent by the visual..
 function createFilterFromList(list, metadata) {
   const replace_exceed_cateogies_with = "<Other...>";
   let filters = [];
@@ -89,6 +93,7 @@ function createFilterFromList(list, metadata) {
   return filters;
 }
 
+//Create a string array from the powerbi-models filter array..
 function createListFromFilter(filters, metadata) {
   const replace_exceed_cateogies_with = "<Other...>";
   let list = [];

@@ -2,32 +2,22 @@
 
 import "core-js/stable";
 import powerbi from "powerbi-visuals-api";
-import '../../build/App';
-import * as models from 'powerbi-models';
+import '../../build/App'; // Load the visual module from parent directory!
 
 
-import IColorPalette = powerbi.extensibility.IColorPalette;
-import IViewport = powerbi.IViewport;
 import IVisual = powerbi.extensibility.visual.IVisual;
 import IVisualHost = powerbi.extensibility.visual.IVisualHost;
 
 import DataView = powerbi.DataView;
-import DataViewCategoryColumn = powerbi.DataViewCategoryColumn;
-import DataViewMetadataColumn = powerbi.DataViewMetadataColumn;
-import DataViewValueColumn = powerbi.DataViewValueColumn;
 import EnumerateVisualObjectInstancesOptions = powerbi.EnumerateVisualObjectInstancesOptions;
 import VisualConstructorOptions = powerbi.extensibility.visual.VisualConstructorOptions;
 import VisualObjectInstance = powerbi.VisualObjectInstance;
-import VisualObjectInstanceEnumeration = powerbi.VisualObjectInstanceEnumeration;
 import VisualObjectInstanceEnumerationObject = powerbi.VisualObjectInstanceEnumerationObject;
-import VisualObjectInstancesToPersist = powerbi.VisualObjectInstancesToPersist;
-import VisualTooltipDataItem = powerbi.extensibility.VisualTooltipDataItem;
 import VisualUpdateOptions = powerbi.extensibility.visual.VisualUpdateOptions;
 
 
 export class Visual implements IVisual {
     private host: IVisualHost;
-    private colorPalette: IColorPalette;
     private customDisplayProperties: any;
 
     constructor(options: VisualConstructorOptions) {
@@ -133,10 +123,18 @@ export class Visual implements IVisual {
             color8: get("color8", colorHelper).solid.color,
             color9: get("color9", colorHelper).solid.color,
             color10: get("color10", colorHelper).solid.color
-        }
+        };
 
-        console.log('Visual update', options);
         (window as any).CustomVisualManager(this.getObjectFromDataView(options.dataViews[0]).metadata, this.getObjectFromDataView(options.dataViews[0]).rows, {
+            renderEventsAPI: (t: string) => {
+                if (t === "start") {
+                    this.host.eventService.renderingStarted(options);
+                } else if (t == "fail") {
+                    this.host.eventService.renderingFailed(options);
+                } else if (t == "finished") {
+                    this.host.eventService.renderingFinished(options);
+                }
+            },
             persist: {
                 get: () => this.getPersist(dataView),
                 set: this.setPersist.bind(this)
@@ -157,12 +155,6 @@ export class Visual implements IVisual {
         });
     }
 
-
-    /**
-     * This function gets called for each of the objects defined in the capabilities files and allows you to select which of the
-     * objects and properties you want to expose to the users in the property pane.
-     *
-     */
     public enumerateObjectInstances(options: EnumerateVisualObjectInstancesOptions): VisualObjectInstance[] | VisualObjectInstanceEnumerationObject {
         let objectName = options.objectName;
         let objectEnumeration: VisualObjectInstance[] = [];
