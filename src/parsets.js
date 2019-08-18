@@ -568,9 +568,6 @@ d3.parsets = function () {
 
 
   var body = d3.select("body");
-  var tooltip = body.append("div")
-    .style("display", "none")
-    .attr("class", "parsets tooltip")
 
   return d3.rebind(parsets, event, "on").value(1).width(960).height(600);
 
@@ -583,14 +580,16 @@ d3.parsets = function () {
     var m = d3.mouse(body.node());
     var left = m[0] + 0;
     var top = m[1] - 20;
-    /*
-    tooltip
-      .style("display", null)
-      .style("left", left + "px")
-      .style("top", top + "px")
-      .attr('class', "parsets tooltip " + className)
-      .html(html);
-    */
+
+    globalCustomization.tooltip.show({
+      coordinates: [left, top],
+      isTouchEvent: false,
+      dataItems: [{
+        displayName: html[0] + '',
+        value: html[1] + '',
+      }],
+      identities: [],
+    })
     clearTimeout(showingTooltip);
     showingTooltip = setTimeout(function () {
       if (showingTooltip) {
@@ -601,7 +600,10 @@ d3.parsets = function () {
 
   function hideTooltip() {
     clearTimeout(showingTooltip);
-    tooltip.style("display", "none");
+    globalCustomization.tooltip.hide({
+      isTouchEvent: false,
+      immediately: true,
+    });
   }
 
   function transition(g) {
@@ -867,11 +869,11 @@ function defaultTooltip(d) {
     };
     d = d.parent;
   }
-  return path.join(" → ") + "<br>" + comma(count) + " " + percent(count / d.count) + "";
+  return [path.join(" → "), comma(count)];
 }
 
 function defaultCategoryTooltip(d) {
-  return "" + d.name + "<br>" + comma(d.count) + " " + percent(d.count / d.dimension.count) + "<br><b style='font-size:10px;color:#00A3E0;'>CLICK TO FILTER</b>";
+  return [d.name, comma(d.count)]
 }
 
 function removePresident(d) {

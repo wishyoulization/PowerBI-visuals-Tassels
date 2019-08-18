@@ -2,8 +2,8 @@ window.persist = {};
 window.filters = [];
 
 //Test props
-persist = { order:  ["___TOP___", "age^2", "Carnegie Classification^3", "Generation^1"] };
-filters = [{"$schema":"http://powerbi.com/product/schema#basic","filterType":1,"operator":"In","target":{"table":"Carnegie Classification","column":"Carnegie Classification"},"values":["Baccalaureate Colleges: Arts & Sciences Focus","Baccalaureate Colleges: Diverse Fields","Master's Colleges & Universities: Medium Programs"]}];
+persist = { order: ["___TOP___", "age^2", "Carnegie Classification^3", "Generation^1"] };
+filters = [{ "$schema": "http://powerbi.com/product/schema#basic", "filterType": 1, "operator": "In", "target": { "table": "Carnegie Classification", "column": "Carnegie Classification" }, "values": ["Baccalaureate Colleges: Arts & Sciences Focus", "Baccalaureate Colleges: Diverse Fields", "Master's Colleges & Universities: Medium Programs"] }];
 
 var config = {
     persist: {
@@ -27,8 +27,12 @@ var config = {
         },
     },
     visualHostTooltipService: {
-        show: function () { },
-        hide: function () { },
+        show: function (d) {
+            console.log("Showing tooltips", d);
+        },
+        hide: function () {
+            console.log("Hiding tooltip")
+        },
         move: function () { }
     },
     custom: {

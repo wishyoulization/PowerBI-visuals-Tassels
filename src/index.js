@@ -15,6 +15,7 @@ window.CustomVisualManager = function (metadata, rows, config) {
     categoryfillcolor: config.custom.categoryfillcolor,
     categoryfontcolor: config.custom.categoryfontcolor,
     persist: config.persist,
+    tooltip: config.visualHostTooltipService,
     filterHelper: {
       set: function (group) {
         let filters = createFilterFromList(group, mappedmeta);

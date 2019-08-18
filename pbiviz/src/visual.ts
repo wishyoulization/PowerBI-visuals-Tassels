@@ -147,6 +147,7 @@ export class Visual implements IVisual {
                     this.host.applyJsonFilter(filters, "general", "filter", powerbi.FilterAction.merge);
                 },
             },
+            visualHostTooltipService: this.host.tooltipService,
             custom: {
                 colors: [props.color1, props.color2, props.color3, props.color4, props.color5, props.color6, props.color7, props.color8, props.color9, props.color10],
                 categoryfillcolor: props.labelcolor,
