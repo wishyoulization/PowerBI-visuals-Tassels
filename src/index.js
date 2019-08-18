@@ -41,36 +41,44 @@ function createFilterFromList(list, metadata) {
       //measure..
       return;
     }
-    let not_in_values = [];
+    let in_or_not_in_values = [];
+    let inOrNotIn = "NotIn"
     list.map(function (l) {
-      if (l.metaindex == i) {
-        if (l.category == replace_exceed_cateogies_with) {
-          m.collapsed.map(function (c) {
-            if (m.isNumber) {
-              not_in_values.push(+c);
-            } else {
-              not_in_values.push(c);
-            }
-          });
-        } else {
-          if (m.isNumber) {
-            not_in_values.push(+l.category);
-          } else {
-            not_in_values.push(l.category);
-          }
-        }
+      if (l.metaindex == i && (l.category == replace_exceed_cateogies_with)) {
+        inOrNotIn = "In";
       }
     })
-    if (not_in_values.length) {
+    if (inOrNotIn == "NotIn") {
+      list.map(function (l) {
+        if (l.metaindex == i) {
+          if (m.isNumber) {
+            in_or_not_in_values.push(+l.category);
+          } else {
+            in_or_not_in_values.push(l.category);
+          }
+        }
+      });
+    } else {
+      in_or_not_in_values = JSON.parse(JSON.stringify(m.uncollapsed))
+      list.map(function (l) {
+        if (l.metaindex == i && !(l.category == replace_exceed_cateogies_with)) {
+          if (in_or_not_in_values.indexOf(l.category) > -1) {
+            in_or_not_in_values.splice(in_or_not_in_values.indexOf(l.category), 1);
+          }
+        }
+      });
+      in_or_not_in_values = in_or_not_in_values.map(p => m.isNumber ? +p : p);
+    }
+    if (in_or_not_in_values.length) {
       filters.push({
         $schema: "http://powerbi.com/product/schema#basic",
         filterType: 1,
-        operator: "NotIn",
+        operator: inOrNotIn,
         target: {
           table: m.table,
           column: m.column,
         },
-        values: not_in_values,
+        values: in_or_not_in_values,
       })
     }
   });
@@ -90,18 +98,20 @@ function createListFromFilter(filters, metadata) {
       }
     }
     if (metaindex !== null) {
-      let exceed_flag = false;
-      f.values.map(function (d) {
-        d = d + ""
-        if (metadata[metaindex].collapsed.indexOf(d) == -1) {
-          list.push(JSON.stringify([metadata[metaindex].name + "^" + metaindex, d]));
-        } else {
-          exceed_flag = true;
-        }
-      });
-      if (exceed_flag) {
+      if (f.operator == "In") {
         list.push(JSON.stringify([metadata[metaindex].name + "^" + metaindex, replace_exceed_cateogies_with]));
+        let stringFilters = f.values.map(d => d + "");
+        metadata[metaindex].uncollapsed.map(function (u) {
+          if (stringFilters.indexOf(u) == -1) {
+            list.push(JSON.stringify([metadata[metaindex].name + "^" + metaindex, u + ""]));
+          }
+        })
+      } else {
+        f.values.map(function (d) {
+          list.push(JSON.stringify([metadata[metaindex].name + "^" + metaindex, d + ""]));
+        });
       }
+
     }
 
   })

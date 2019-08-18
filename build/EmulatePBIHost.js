@@ -3,7 +3,7 @@ window.filters = [];
 
 //Test props
 persist = { order:  ["___TOP___", "age^2", "Carnegie Classification^3", "Generation^1"] };
-filters = [{"$schema":"http://powerbi.com/product/schema#basic","filterType":1,"operator":"NotIn","target":{"table":"Generation","column":"Generation"},"values":["Generation X"]},{"$schema":"http://powerbi.com/product/schema#basic","filterType":1,"operator":"NotIn","target":{"table":"age","column":"age"},"values":["Not available","60-69"]},{"$schema":"http://powerbi.com/product/schema#basic","filterType":1,"operator":"NotIn","target":{"table":"Carnegie Classification","column":"Carnegie Classification"},"values":["Master's Colleges & Universities: Small Programs","Doctoral Universities: Higher Research Activity","Doctoral Universities: Moderate Research Activity","Special Focus Four-Year: Faith-Related Institutions","Baccalaureate/Associate's Colleges: Mixed Baccalaureate/Associate's","Special Focus Four-Year: Other Health Professions Schools","Baccalaureate/Associate's Colleges: Associate's Dominant","Special Focus Four-Year: Arts, Music & Design Schools","Not available","Special Focus Four-Year: Other Special Focus Institutions","Special Focus Four-Year: Business & Management Schools","Tribal Colleges","Special Focus Four-Year: Other Technology-Related Schools","Special Focus Four-Year: Medical Schools & Centers","Special Focus Four-Year: Engineering Schools"]}];
+filters = [{"$schema":"http://powerbi.com/product/schema#basic","filterType":1,"operator":"In","target":{"table":"Carnegie Classification","column":"Carnegie Classification"},"values":["Baccalaureate Colleges: Arts & Sciences Focus","Baccalaureate Colleges: Diverse Fields","Master's Colleges & Universities: Medium Programs"]}];
 
 var config = {
     persist: {
