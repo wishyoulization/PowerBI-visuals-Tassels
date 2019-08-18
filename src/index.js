@@ -7,7 +7,6 @@ import { default as generateDataFromMetaAndRows } from "./generateDataFromMetaAn
 
 window.CustomVisualManager = function (metadata, rows, config) {
   const { data, mappedmeta } = generateDataFromMetaAndRows(metadata, rows);
-  //console.log("Loaded OK", data, config);
   console.log(data, mappedmeta);
   const customizationLayer = {
     overall: config.custom.overall,
@@ -20,14 +19,17 @@ window.CustomVisualManager = function (metadata, rows, config) {
       set: function (group) {
         let filters = createFilterFromList(group, mappedmeta);
         config.filter.set(filters);
-        console.log(filters);
         return true;
       },
       get: function () {
         let filters = config.filter.get();
         let list = createListFromFilter(filters, metadata);
-        console.log(list);
-        return list;
+        if (list === -1) {
+          config.filter.set(null);
+          return []
+        } else {
+          return list;
+        }
       }
     }
   };
@@ -90,6 +92,7 @@ function createFilterFromList(list, metadata) {
 function createListFromFilter(filters, metadata) {
   const replace_exceed_cateogies_with = "<Other...>";
   let list = [];
+  let invalid_filters_found_flag = false;
   filters.map(function (f) {
     let metaindex = null;
     for (let i = 0; i < metadata.length; i++) {
@@ -98,6 +101,11 @@ function createListFromFilter(filters, metadata) {
         metaindex = i;
       }
     }
+    // looped through all tables and did not find the requested target, i.e. 
+    // the filter applied is not related to the columns in the fields
+    // this filter must be removed
+    invalid_filters_found_flag = (metaindex == null);
+
     if (metaindex !== null) {
       if (f.operator == "In") {
         list.push(JSON.stringify([metadata[metaindex].name + "^" + metaindex, replace_exceed_cateogies_with]));
@@ -117,5 +125,5 @@ function createListFromFilter(filters, metadata) {
 
   })
 
-  return list;
+  return invalid_filters_found_flag ? -1 : list;
 }
