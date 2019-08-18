@@ -28,8 +28,9 @@ d3.parsets = function () {
         total,
         ribbon;
 
-      d3.select(window).on("mousemove.parsets." + ++parsetsId, unhighlight);
-
+      //not required as the visual occupies everything in the iframe
+      //d3.select(window).on("mousemove.parsets." + ++parsetsId, unhighlight);
+      
       if (tension0 == null) tension0 = tension;
       g.selectAll(".ribbon, .ribbon-mouse")
         .data(["ribbon", "ribbon-mouse"], String)
@@ -42,6 +43,14 @@ d3.parsets = function () {
         else tensionTween()(1);
       }
 
+      //reapply category hides when initial loading too..
+      g.selectAll('g.category').each(function (gc) {
+        var thisTmp = JSON.stringify([gc.dimension.name, gc.name]);
+        if (categoryHidden.indexOf(thisTmp) > -1) {
+          categoryHidden.splice(categoryHidden.indexOf(thisTmp), 1);
+          categoryClick.bind(this)(gc);
+        }
+      });
 
       function tensionTween() {
         var i = d3.interpolateNumber(tension0, tension);
@@ -122,6 +131,7 @@ d3.parsets = function () {
           .attr("transform", "translate(0,-25)");
         textEnter.append("tspan")
           .attr("class", "name")
+          .attr("dx", "2px")
           .text(dimensionFormatName)
           .style('fill', globalCustomization.dimensionfontcolor || "#000000");
         textEnter.append("tspan")
@@ -142,6 +152,9 @@ d3.parsets = function () {
               d.y0 = d.y;
             })
             .on("drag", function (d) {
+              if(!dragging){
+                return;
+              }
               d.y0 = d.y = d3.event.y;
               //Alok:do not allow to drag to the first row
               if (d.y0 < 60) {
@@ -171,6 +184,9 @@ d3.parsets = function () {
                 .attr("d", ribbonPath);
             })
             .on("dragend", function (d) {
+              if(!dragging){
+                return;
+              }
               dragging = false;
               unhighlight();
               //Alok: set the heights here simialr to layout
@@ -309,6 +325,10 @@ d3.parsets = function () {
       }
 
       function categoryClick(d) {
+        if (d3.event && d3.event.defaultPrevented) {
+          //to prevent click event while dragging..
+          return;
+        }
         var tmpThis = JSON.stringify([d.dimension.name, d.name]);
         if (categoryHidden.indexOf(tmpThis) > -1) {
           d.nodes.forEach(function (nd) { unhide(nd); })
@@ -420,6 +440,9 @@ d3.parsets = function () {
           })
           .on("mouseout.parsets", unhighlight)
           .on("mousedown.parsets", cancelEvent)
+
+        //drag the category boxes...
+        category.filter(removePresident)
           .call(d3.behavior.drag()
             .origin(identity)
             .on("dragstart", function (d) {
@@ -428,19 +451,27 @@ d3.parsets = function () {
               d.x0 = d.x;
             })
             .on("drag", function (d) {
+              if(!dragging){
+                return;
+              }
               d.x = d3.event.x;
               var categories = d.dimension.categories;
               for (var i = 0, c = categories[0]; ++i < categories.length;) {
                 if (c.x + c.dx / 2 > (c = categories[i]).x + c.dx / 2) {
                   categories.sort(function (a, b) { return a.x + a.dx / 2 - b.x - b.dx / 2; });
                   nodes = layout(tree, dimensions, ordinal);
-                  updateRibbons();
-                  updateCategories(g);
-                  highlight(d.node);
+                  //updateRibbons();
+                  //updateCategories(g);
+                  //highlight(d.node);
                   event.sortCategories();
                   break;
                 }
               }
+
+              // Moved it from inside the for loop to here to fix 
+              // the category positioning not updating bug..
+              updateCategories(g);
+
               var x = 0,
                 p = spacing / (categories.length - 1);
               categories.forEach(function (e) {
@@ -455,6 +486,9 @@ d3.parsets = function () {
                 .attr("d", ribbonPath);
             })
             .on("dragend", function (d) {
+              if(!dragging){
+                return;
+              }
               dragging = false;
               unhighlight();
               updateRibbons();
@@ -490,15 +524,6 @@ d3.parsets = function () {
 
         //Alok: For custom turn on off feature;
         category.filter(removePresident).on('click', categoryClick)
-        // - - 
-        //reapply category hides when initial loading too..
-        g.selectAll('g.category').each(function (gc) {
-          var thisTmp = JSON.stringify([gc.dimension.name, gc.name]);
-          if (categoryHidden.indexOf(thisTmp) > -1) {
-            categoryHidden.splice(categoryHidden.indexOf(thisTmp), 1);
-            categoryClick.bind(this)(gc);
-          }
-        });
       }
     });
   }
@@ -581,7 +606,6 @@ d3.parsets = function () {
 
     globalCustomization.tooltip.show({
       coordinates: [left, top],
-      isTouchEvent: false,
       dataItems: [{
         displayName: html[0] + '',
         value: html[1] + '',
@@ -599,7 +623,6 @@ d3.parsets = function () {
   function hideTooltip() {
     clearTimeout(showingTooltip);
     globalCustomization.tooltip.hide({
-      isTouchEvent: false,
       immediately: true,
     });
   }
