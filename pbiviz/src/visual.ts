@@ -106,13 +106,23 @@ export class Visual implements IVisual {
         ) {
             return;
         }
+    
         const dataView = options.dataViews[0];
         const get = (p: string, d: any) => this.getProperty(dataView, 'displaySettings', p, d);
         const colorHelper = (d: any) => { return { "solid": { "color": this.host.colorPalette.getColor(d).value } } };
+
+        // If Category collapse max field is changed, clear the filters..
+        if(this.customDisplayProperties && (this.customDisplayProperties.collapsemax != get('collapsemax', 5))){
+            this.host.applyJsonFilter(null, "general", "filter", powerbi.FilterAction.merge);
+        };
+
         const props = this.customDisplayProperties = {
             top: get('top', 'All'),
+            dimensiontextcolor: get("dimensiontextcolor", { "solid": { "color": "#333333" } }).solid.color,
             labelcolor: get("labelcolor", { "solid": { "color": "#333333" } }).solid.color,
             labeltextcolor: get("labeltextcolor", { "solid": { "color": "#ffffff" } }).solid.color,
+            collapsetext: get('collapsetext', 'Other...'),
+            collapsemax: get('collapsemax', 5),
             color1: get("color1", colorHelper).solid.color,
             color2: get("color2", colorHelper).solid.color,
             color3: get("color3", colorHelper).solid.color,
@@ -150,7 +160,11 @@ export class Visual implements IVisual {
                 colors: [props.color1, props.color2, props.color3, props.color4, props.color5, props.color6, props.color7, props.color8, props.color9, props.color10],
                 categoryfillcolor: props.labelcolor,
                 categoryfontcolor: props.labeltextcolor,
-                overall: props.top
+                overall: props.top,
+                dimensionfontcolor: props.dimensiontextcolor,
+                collapsedlabel: props.collapsetext,
+                categorymax: props.collapsemax
+
             }
         });
     }
@@ -167,6 +181,9 @@ export class Visual implements IVisual {
                     objectName: objectName,
                     displayName: "Wishyoulization Settings",
                     properties: this.customDisplayProperties,
+                    validValues: {
+                        collapsemax: { numberRange: { min: 1, max: 20 } }
+                    },
                     selector: null
                 });
                 break;

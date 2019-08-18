@@ -1,10 +1,8 @@
-import { type } from "os";
-
-export default function generateDataFromMetaAndRows(metadata, rows) {
+export default function generateDataFromMetaAndRows(metadata, rows, MAX, COLLAPSELABEL) {
   let value_index = null;
   const default_value = 1;
-  const max_categories_in_dimension = 4;
-  const replace_exceed_cateogies_with = "<Other...>";
+  const max_categories_in_dimension = MAX - 1;
+  const replace_exceed_cateogies_with = "<" + COLLAPSELABEL + ">";
   let data = new Array(rows.length);
   metadata.map(function (d, i) {
     if (d.table == null && d.column == null) {

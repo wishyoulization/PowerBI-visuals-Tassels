@@ -8,7 +8,12 @@
         {
             "displayName": "Value",
             "name": "value",
-            "kind": "Measure"
+            "kind": "Measure",
+            "requiredTypes": [
+                {
+                    "numeric": true
+                }
+            ]
         }
     ],
     "objects": {
@@ -24,7 +29,7 @@
                     "type": {
                         "filter": true
                     }
-                },      
+                },
                 "selfFilter": {
                     "type": {
                         "filter": {
@@ -41,6 +46,16 @@
                     "displayName": "Top Row Label",
                     "type": {
                         "text": true
+                    }
+                },
+                "dimensiontextcolor": {
+                    "displayName": "Row Header Text Color",
+                    "type": {
+                        "fill": {
+                            "solid": {
+                                "color": true
+                            }
+                        }
                     }
                 },
                 "labelcolor": {
@@ -61,6 +76,18 @@
                                 "color": true
                             }
                         }
+                    }
+                },
+                "collapsetext": {
+                    "displayName": "Collapsed Category Alias",
+                    "type": {
+                        "text": true
+                    }
+                },
+                "collapsemax": {
+                    "displayName": "Max #Category",
+                    "type": {
+                        "integer": true
                     }
                 },
                 "color1": {
@@ -175,38 +202,40 @@
             "tooltips"
         ]
     },
-    "dataViewMappings": [{
-        "conditions": [
-            {
-                "fields": {
-                    "max": 10
-                },
-                "value": {
-                    "max": 1
-                }
-            }
-        ],
-        "table": {
-            "rows": {
-                "dataReductionAlgorithm": {
-                    "top": {
-                        "count": 30000
+    "dataViewMappings": [
+        {
+            "conditions": [
+                {
+                    "fields": {
+                        "max": 10
+                    },
+                    "value": {
+                        "max": 1
                     }
-                },
-                "select": [
-                    {
-                        "for": {
-                            "in": "fields"
+                }
+            ],
+            "table": {
+                "rows": {
+                    "dataReductionAlgorithm": {
+                        "top": {
+                            "count": 30000
                         }
                     },
-                    {
-                        "for": {
-                            "in": "value"
+                    "select": [
+                        {
+                            "for": {
+                                "in": "fields"
+                            }
+                        },
+                        {
+                            "for": {
+                                "in": "value"
+                            }
                         }
-                    }
-                ]
+                    ]
+                }
             }
         }
-    }],
+    ],
     "advancedEditModeSupport": 0
 }

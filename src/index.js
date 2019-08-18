@@ -6,25 +6,26 @@ import { default as generateDataFromMetaAndRows } from "./generateDataFromMetaAn
 
 
 window.CustomVisualManager = function (metadata, rows, config) {
-  const { data, mappedmeta } = generateDataFromMetaAndRows(metadata, rows);
+  const { data, mappedmeta } = generateDataFromMetaAndRows(metadata, rows, config.custom.categorymax, config.custom.collapsedlabel);
 
   const customizationLayer = {
     overall: config.custom.overall,
     colors: config.custom.colors,
     categoryfillcolor: config.custom.categoryfillcolor,
     categoryfontcolor: config.custom.categoryfontcolor,
+    dimensionfontcolor: config.custom.dimensionfontcolor,
     persist: config.persist,
     tooltip: config.visualHostTooltipService,
     renderEventsAPI: config.renderEventsAPI,
     filterHelper: {
       set: function (group) {
-        let filters = createFilterFromList(group, mappedmeta);
+        let filters = createFilterFromList(group, mappedmeta, config.custom.collapsedlabel);
         config.filter.set(filters);
         return true;
       },
       get: function () {
         let filters = config.filter.get();
-        let list = createListFromFilter(filters, metadata);
+        let list = createListFromFilter(filters, metadata, config.custom.collapsedlabel);
         if (list === -1) {
           config.filter.set(null);
           return []
@@ -40,8 +41,8 @@ window.CustomVisualManager = function (metadata, rows, config) {
 };
 
 //Create a powerbi-models filter array from a list of strings sent by the visual..
-function createFilterFromList(list, metadata) {
-  const replace_exceed_cateogies_with = "<Other...>";
+function createFilterFromList(list, metadata, COLLAPSELABEL) {
+  const replace_exceed_cateogies_with = "<" + COLLAPSELABEL + ">";
   let filters = [];
   metadata.map(function (m, i) {
     if (m.table == null || m.column == null) {
@@ -94,8 +95,8 @@ function createFilterFromList(list, metadata) {
 }
 
 //Create a string array from the powerbi-models filter array..
-function createListFromFilter(filters, metadata) {
-  const replace_exceed_cateogies_with = "<Other...>";
+function createListFromFilter(filters, metadata, COLLAPSELABEL) {
+  const replace_exceed_cateogies_with = "<" + COLLAPSELABEL + ">";
   let list = [];
   let invalid_filters_found_flag = false;
   filters.map(function (f) {

@@ -123,7 +123,7 @@ d3.parsets = function () {
         textEnter.append("tspan")
           .attr("class", "name")
           .text(dimensionFormatName)
-          .style('fill', globalCustomization.categoryfillcolor || "#000000");
+          .style('fill', globalCustomization.dimensionfontcolor || "#000000");
         textEnter.append("tspan")
           .attr("class", "sort alpha")
           .attr("dx", "2em")
