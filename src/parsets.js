@@ -921,16 +921,16 @@ export default function (domNodeSelector, data, customization) {
     return -1;
   }
   categoryHidden = globalCustomization.filterHelper.get();
-  console.log(categoryHidden)
+
   //Apply a stored list..
-  var storedList = globalCustomization.persist.get() && globalCustomization.persist.get().order || [];
+  var storedList = (globalCustomization.persist.get() && globalCustomization.persist.get().order) || [];
   var problemDetected = false;
   storedList.map(d => {
-    if (masterList.indexOf[d] == -1) {
+    if (masterList.indexOf(d) == -1) {
       problemDetected = true;
     }
   })
-  if (storedList.length == masterList.length && !problemDetected) {
+  if ((storedList.length == masterList.length) && (problemDetected == false)) {
     masterList = storedList
   }
 

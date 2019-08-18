@@ -2,7 +2,7 @@ window.persist = {};
 window.filters = [];
 
 //Test props
-persist = { order: ["___TOP___", "age^2", "Carnegie Classification^3", "Generation^1"] };
+persist = { order: ["___TOP___", "age^2", "Carnegie a Classification^3", "Generation^1"] };
 filters = [{ "$schema": "http://powerbi.com/product/schema#basic", "filterType": 1, "operator": "In", "target": { "table": "Carnegie Classification", "column": "Carnegie Classification" }, "values": ["Baccalaureate Colleges: Arts & Sciences Focus", "Baccalaureate Colleges: Diverse Fields", "Master's Colleges & Universities: Medium Programs"] }];
 
 var config = {
@@ -28,10 +28,10 @@ var config = {
     },
     visualHostTooltipService: {
         show: function (d) {
-            console.log("Showing tooltips", d);
+            //console.log("Showing tooltips", d);
         },
         hide: function () {
-            console.log("Hiding tooltip")
+            //console.log("Hiding tooltip")
         },
         move: function () { }
     },
