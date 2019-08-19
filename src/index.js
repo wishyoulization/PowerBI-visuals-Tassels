@@ -123,6 +123,15 @@ function createListFromFilter(filters, metadata, COLLAPSELABEL) {
         })
       } else {
         f.values.map(function (d) {
+          // If the value is a collapsed value, it wont be visible, this
+          // happen when first filtering the tassel, then selecting 
+          // from this tassel and unfiltering from the external filter
+          // which now moves the earlier visible category to collapsed
+          // when this happens we need to invalidate filters..
+          if(metadata[metaindex].collapsed.indexOf(d+"") > -1){
+            invalid_filters_found_flag = true;
+          }
+
           list.push(JSON.stringify([metadata[metaindex].name + "^" + metaindex, d + ""]));
         });
       }

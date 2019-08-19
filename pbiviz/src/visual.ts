@@ -50,9 +50,10 @@ export class Visual implements IVisual {
                 });
 
             } else {
+                var lastIndex = currentColumn.queryName.lastIndexOf('.');
                 metadata.push({
                     column: currentColumn.queryName.replace(/.*\./, ""),
-                    table: currentColumn.queryName.replace(/\..*/, ""),
+                    table: currentColumn.queryName.substr(0,lastIndex),
                     name: currentColumn.displayName,
                     roles: Object.keys(currentColumn.roles)
                 });

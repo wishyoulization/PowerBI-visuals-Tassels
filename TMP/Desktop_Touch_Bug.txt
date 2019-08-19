@@ -1,0 +1,115 @@
+Feedback Type:
+Frown (Error)
+
+Error Message:
+An error occurred while rendering the report.
+
+Stack Trace:
+TypeError: Cannot read property 'clientX' of undefined
+    at ms-pbi://pbi.microsoft.com/minerva/scripts/desktop.js:56267:62
+    at HTMLDocument.<anonymous> (ms-pbi://pbi.microsoft.com/minerva/scripts/desktop.js:26152:20)
+    at ZoneDelegate.invoke (ms-pbi://pbi.microsoft.com/minerva/scripts/desktop.js:67307:176)
+    at Zone.run (ms-pbi://pbi.microsoft.com/minerva/scripts/desktop.js:67171:55)
+    at HTMLDocument.globalListener (ms-pbi://pbi.microsoft.com/minerva/scripts/desktop.js:26291:116)
+    at SandboxDelegate.onRelayUIEvent (ms-pbi://pbi.microsoft.com/minerva/scripts/VisualHostUI.js:1936:37)
+    at SandboxVisualProxy.onMessageReceived (ms-pbi://pbi.microsoft.com/minerva/scripts/VisualHostUI.js:1023:276)
+    at ms-pbi://pbi.microsoft.com/minerva/scripts/VisualHostUI.js:937:34
+    at WindowMessageProxy.invokeHandler (ms-pbi://pbi.microsoft.com/minerva/scripts/VisualHostCore.js:2888:38)
+    at WindowMessageProxy.dispatchMessage (ms-pbi://pbi.microsoft.com/minerva/scripts/VisualHostCore.js:2878:26)
+
+Stack Trace Message:
+An error occurred while rendering the report.
+
+Invocation Stack Trace:
+   at Microsoft.Mashup.Host.Document.ExceptionExtensions.GetCurrentInvocationStackTrace()
+   at Microsoft.Mashup.Client.UI.Shared.StackTraceInfo..ctor(String exceptionStackTrace, String invocationStackTrace, String exceptionMessage)
+   at Microsoft.PowerBI.Client.Windows.Telemetry.PowerBIUserFeedbackServices.GetStackTraceInfo(Exception e)
+   at Microsoft.PowerBI.Client.Windows.Telemetry.PowerBIUserFeedbackServices.ReportException(IWindowHandle activeWindow, IUIHost uiHost, FeedbackPackageInfo feedbackPackageInfo, Exception e, Boolean useGDICapture)
+   at Microsoft.Mashup.Client.UI.Shared.UnexpectedExceptionHandler.<>c__DisplayClass14_0.<HandleException>b__0()
+   at Microsoft.Mashup.Host.Document.SynchronizationContextExtensions.<>c__DisplayClass0_1.<SendAndMarshalExceptions>b__0(Object null)
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Object[] arguments, Signature sig, Boolean constructor)
+   at System.Reflection.RuntimeMethodInfo.UnsafeInvokeInternal(Object obj, Object[] parameters, Object[] arguments)
+   at System.Delegate.DynamicInvokeImpl(Object[] args)
+   at System.Windows.Forms.Control.InvokeMarshaledCallbackDo(ThreadMethodEntry tme)
+   at System.Windows.Forms.Control.InvokeMarshaledCallbackHelper(Object obj)
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state, Boolean preserveSyncCtx)
+   at System.Threading.ExecutionContext.Run(ExecutionContext executionContext, ContextCallback callback, Object state, Boolean preserveSyncCtx)
+   at System.Threading.ExecutionContext.Run(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Windows.Forms.Control.InvokeMarshaledCallback(ThreadMethodEntry tme)
+   at System.Windows.Forms.Control.InvokeMarshaledCallbacks()
+   at System.Windows.Forms.Control.WndProc(Message& m)
+   at System.Windows.Forms.NativeWindow.Callback(IntPtr hWnd, Int32 msg, IntPtr wparam, IntPtr lparam)
+   at System.Windows.Forms.UnsafeNativeMethods.DispatchMessageW(MSG& msg)
+   at System.Windows.Forms.UnsafeNativeMethods.DispatchMessageW(MSG& msg)
+   at System.Windows.Forms.Application.ComponentManager.System.Windows.Forms.UnsafeNativeMethods.IMsoComponentManager.FPushMessageLoop(IntPtr dwComponentID, Int32 reason, Int32 pvLoopData)
+   at System.Windows.Forms.Application.ThreadContext.RunMessageLoopInner(Int32 reason, ApplicationContext context)
+   at System.Windows.Forms.Application.ThreadContext.RunMessageLoop(Int32 reason, ApplicationContext context)
+   at System.Windows.Forms.Form.ShowDialog(IWin32Window owner)
+   at Microsoft.Mashup.Client.UI.Shared.WebDialogs.WebDialog.<>n__0(IWindowHandle owner)
+   at Microsoft.Mashup.Client.UI.Shared.WindowManager.ShowModal[T](T dialog, Func`1 showModalFunction)
+   at Microsoft.PowerBI.Client.Program.<>c__DisplayClass4_0.<Main>b__1()
+   at Microsoft.PowerBI.Client.Windows.IExceptionHandlerExtensions.<>c__DisplayClass3_0.<HandleExceptionsWithNestedTasks>b__0()
+   at Microsoft.Mashup.Host.Document.ExceptionHandlerExtensions.HandleExceptions(IExceptionHandler exceptionHandler, Action action)
+   at Microsoft.PowerBI.Client.Program.Main(String[] args)
+
+
+JS Error Message:
+Uncaught TypeError: Cannot read property 'clientX' of undefined
+
+Model Default Mode:
+Import
+
+Snapshot Trace Logs:
+C:\Users\Alok Pepakayala\Microsoft\Power BI Desktop Store App\FrownSnapShot1877120268.zip
+
+Performance Trace Logs:
+C:\Users\Alok Pepakayala\Microsoft\Power BI Desktop Store App\PerformanceTraces.zip
+
+Enabled Preview Features:
+PBI_userFavoriteResourcePackagesEnabled
+
+Disabled Preview Features:
+PBI_shapeMapVisualEnabled
+PBI_SpanishLinguisticsEnabled
+PBI_NewWebTableInference
+PBI_showIncrementalRefreshPolicy
+PBI_qnaLiveConnect
+
+Disabled DirectQuery Options:
+TreatHanaAsRelationalSource
+
+Cloud:
+GlobalCloud
+
+Recent Actions:
+VisualContainerPersistProperties, VisualContainerPersistProperties
+
+Formulas:
+
+
+section Section1;
+
+shared University = let
+    Source = Csv.Document(File.Contents("C:\Users\Alok Pepakayala\Projects\WISHYOULIZATION\power-bi\PowerBI-visuals-Tassels\TMP\data.csv"),[Delimiter=",", Columns=20, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"PersonID", Int64.Type}, {"Name", type text}, {"EmploymentHistory", type text}, {"Gender", type text}, {"Generation", type text}, {"Age", type text}, {"Multiple Doctoral Degrees", type text}, {"Multiple Master's Degrees", type text}, {"Multiple Bachelor's Degrees", type text}, {"Doctorate Area of Study", type text}, {"Pathway", type text}, {"Years in Presidency", type text}, {"Provost or Dean", type text}, {"Sector", type text}, {"Size Category", type text}, {"Research Expenses Per FTE", type text}, {"Endowment Value Per FTE", type text}, {"Carnegie Classification", type text}, {"Land Grant", type text}, {"president", type text}})
+in
+    #"Changed Type";
+
+shared #"Bob Ross" = let
+    Source = Csv.Document(File.Contents("C:\Users\Alok Pepakayala\Projects\WISHYOULIZATION\power-bi\PowerBI-visuals-Tassels\TMP\fivethirtyeight-bob-ross-dataset.csv"),[Delimiter=",", Columns=69, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"EPISODE", type text}, {"TITLE", type text}, {"APPLE_FRAME", Int64.Type}, {"AURORA_BOREALIS", Int64.Type}, {"BARN", Int64.Type}, {"BEACH", Int64.Type}, {"BOAT", Int64.Type}, {"BRIDGE", Int64.Type}, {"BUILDING", Int64.Type}, {"BUSHES", Int64.Type}, {"CABIN", Int64.Type}, {"CACTUS", Int64.Type}, {"CIRCLE_FRAME", Int64.Type}, {"CIRRUS", Int64.Type}, {"CLIFF", Int64.Type}, {"CLOUDS", Int64.Type}, {"CONIFER", Int64.Type}, {"CUMULUS", Int64.Type}, {"DECIDUOUS", Int64.Type}, {"DIANE_ANDRE", Int64.Type}, {"DOCK", Int64.Type}, {"DOUBLE_OVAL_FRAME", Int64.Type}, {"FARM", Int64.Type}, {"FENCE", Int64.Type}, {"FIRE", Int64.Type}, {"FLORIDA_FRAME", Int64.Type}, {"FLOWERS", Int64.Type}, {"FOG", Int64.Type}, {"FRAMED", Int64.Type}, {"GRASS", Int64.Type}, {"GUEST", Int64.Type}, {"HALF_CIRCLE_FRAME", Int64.Type}, {"HALF_OVAL_FRAME", Int64.Type}, {"HILLS", Int64.Type}, {"LAKE", Int64.Type}, {"LAKES", Int64.Type}, {"LIGHTHOUSE", Int64.Type}, {"MILL", Int64.Type}, {"MOON", Int64.Type}, {"MOUNTAIN", Int64.Type}, {"MOUNTAINS", Int64.Type}, {"NIGHT", Int64.Type}, {"OCEAN", Int64.Type}, {"OVAL_FRAME", Int64.Type}, {"PALM_TREES", Int64.Type}, {"PATH", Int64.Type}, {"PERSON", Int64.Type}, {"PORTRAIT", Int64.Type}, {"RECTANGLE_3D_FRAME", Int64.Type}, {"RECTANGULAR_FRAME", Int64.Type}, {"RIVER", Int64.Type}, {"ROCKS", Int64.Type}, {"SEASHELL_FRAME", Int64.Type}, {"SNOW", Int64.Type}, {"SNOWY_MOUNTAIN", Int64.Type}, {"SPLIT_FRAME", Int64.Type}, {"STEVE_ROSS", Int64.Type}, {"STRUCTURE", Int64.Type}, {"SUN", Int64.Type}, {"TOMB_FRAME", Int64.Type}, {"TREE", Int64.Type}, {"TREES", Int64.Type}, {"TRIPLE_FRAME", Int64.Type}, {"WATERFALL", Int64.Type}, {"WAVES", Int64.Type}, {"WINDMILL", Int64.Type}, {"WINDOW_FRAME", Int64.Type}, {"WINTER", Int64.Type}, {"WOOD_FRAMED", Int64.Type}})
+in
+    #"Changed Type";
+
+shared Appstore = let
+    Source = Csv.Document(File.Contents("C:\Users\Alok Pepakayala\Projects\WISHYOULIZATION\power-bi\PowerBI-visuals-Tassels\TMP\googleplaystore.csv"),[Delimiter=",", Columns=13, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"App", type text}, {"Category", type text}, {"Rating", type number}, {"Reviews", Int64.Type}, {"Size", type text}, {"Installs", Int64.Type}, {"Type", type text}, {"Price", Int64.Type}, {"Content Rating", type text}, {"Genres", type text}, {"Last Updated", type date}, {"Current Ver", type text}, {"Android Ver", type text}}),
+    #"Added Index" = Table.AddIndexColumn(#"Changed Type", "Index", 1, 1)
+in
+    #"Added Index";
+
+Active Section Contract:
+{"id":0,"name":"ReportSection","displayName":"Tassels Intro and Slicer Demo","filters":"[]","ordinal":0,"visualContainers":[{"x":85.69475655430712,"y":541.0280898876405,"z":0,"width":487.30898876404495,"height":156.04119850187266,"config":{"name":"12df8e3cacaec032109b","layouts":[{"id":0,"position":{"x":85.69475655430712,"y":541.0280898876405,"z":0,"width":487.30898876404495,"height":156.04119850187266}}],"singleVisual":{"visualType":"columnChart","projections":{"Category":[{"queryRef":"data.Age","active":true}],"Y":[{"queryRef":"Count(University.PersonID)"}],"Series":[{"queryRef":"University.Gender"}]},"prototypeQuery":{"Version":2,"From":[{"Name":"d","Entity":"University"}],"Select":[{"Column":{"Expression":{"SourceRef":{"Source":"d"}},"Property":"Age"},"Name":"data.Age"},{"Aggregation":{"Expression":{"Column":{"Expression":{"SourceRef":{"Source":"d"}},"Property":"PersonID"}},"Function":2},"Name":"Count(University.PersonID)"},{"Column":{"Expression":{"SourceRef":{"Source":"d"}},"Property":"Gender"},"Name":"University.Gender"}],"OrderBy":[{"Direction":2,"Expression":{"Aggregation":{"Expression":{"Column":{"Expression":{"SourceRef":{"Source":"d"}},"Property":"PersonID"}},"Function":2}}}]},"drillFilterOtherVisuals":true,"objects":{"valueAxis":[{"properties":{"start":{"expr":{"Literal":{"Value":"0D"}}},"end":{"expr":{"Literal":{"Value":"220D"}}},"show":{"expr":{"Literal":{"Value":"false"}}},"gridlineShow":{"expr":{"Literal":{"Value":"false"}}}}}],"categoryAxis":[{"properties":{"maxMarginFactor":{"expr":{"Literal":{"Value":"21L"}}},"preferredCategoryWidth":{"expr":{"Literal":{"Value":"20D"}}},"innerPadding":{"expr":{"Literal":{"Value":"5L"}}},"fontSize":{"expr":{"Literal":{"Value":"8M"}}},"concatenateLabels":{"expr":{"Literal":{"Value":"false"}}},"showAxisTitle":{"expr":{"Literal":{"Value":"false"}}}}}],"legend":[{"properties":{"show":{"expr":{"Literal":{"Value":"true"}}},"titleText":{"expr":{"Literal":{"Value":"''"}}},"position":{"expr":{"Literal":{"Value":"'Top'"}}}}}],"dataPoint":[{"properties":{"fill":{"solid":{"color":{"expr":{"ThemeDataColor":{"ColorId":0,"Percent":0}}}}},"showAllDataPoints":{"expr":{"Literal":{"Value":"true"}}}}},{"properties":{"fill":{"solid":{"color":{"expr":{"Literal":{"Value":"'#F61C85'"}}}}}},"selector":{"data":[{"scopeId":{"Comparison":{"ComparisonKind":0,"Left":{"Column":{"Expression":{"SourceRef":{"Entity":"University"}},"Property":"Gender"}},"Right":{"Literal":{"Value":"'Female'"}}}}}]}},{"properties":{"fill":{"solid":{"color":{"expr":{"Literal":{"Value":"'#5651FF'"}}}}}},"selector":{"data":[{"scopeId":{"Comparison":{"ComparisonKind":0,"Left":{"Column":{"Expression":{"SourceRef":{"Entity":"University"}},"Property":"Gender"}},"Right":{"Literal":{"Value":"'Male'"}}}}}]}},{"properties":{"fill":{"solid":{"color":{"expr":{"ThemeDataColor":{"ColorId":1,"Percent":0}}}}}},"selector":{"data":[{"scopeId":{"Comparison":{"ComparisonKind":0,"Left":{"Column":{"Expression":{"SourceRef":{"Entity":"University"}},"Property":"Gender"}},"Right":{"Literal":{"Value":"'Not available'"}}}}}]}}],"labels":[{"properties":{"show":{"expr":{"Literal":{"Value":"true"}}},"fontSize":{"expr":{"Literal":{"Value":"'9'"}}}}}]},"vcObjects":{"title":[{"properties":{"show":{"expr":{"Literal":{"Value":"false"}}}}}],"background":[{"properties":{"show":{"expr":{"Literal":{"Value":"true"}}},"color":{"solid":{"color":{"expr":{"ThemeDataColor":{"ColorId":0,"Percent":-0.3}}}}},"transparency":{"expr":{"Literal":{"Value":"77D"}}}}}]}}},"filters":"[]"},{"x":79.29962546816479,"y":47.323970037453186,"z":4000,"width":500.0992509363296,"height":460.4494382022472,"config":{"name":"5825b95544b01205441c","layouts":[{"id":0,"position":{"x":79.29962546816479,"y":47.323970037453186,"z":4000,"width":500.0992509363296,"height":460.4494382022472}}],"singleVisual":{"visualType":"wishyoulizationtassels","projections":{"fields":[{"queryRef":"University.Gender"},{"queryRef":"University.Age"},{"queryRef":"University.Multiple Bachelor's Degrees"}],"value":[{"queryRef":"CountNonNull(University.PersonID)"}]},"prototypeQuery":{"Version":2,"From":[{"Name":"u","Entity":"University"}],"Select":[{"Column":{"Expression":{"SourceRef":{"Source":"u"}},"Property":"Gender"},"Name":"University.Gender"},{"Column":{"Expression":{"SourceRef":{"Source":"u"}},"Property":"Age"},"Name":"University.Age"},{"Aggregation":{"Expression":{"Column":{"Expression":{"SourceRef":{"Source":"u"}},"Property":"PersonID"}},"Function":2},"Name":"CountNonNull(University.PersonID)"},{"Column":{"Expression":{"SourceRef":{"Source":"u"}},"Property":"Multiple Bachelor's Degrees"},"Name":"University.Multiple Bachelor's Degrees"}],"OrderBy":[{"Direction":2,"Expression":{"Aggregation":{"Expression":{"Column":{"Expression":{"SourceRef":{"Source":"u"}},"Property":"PersonID"}},"Function":2}}}]},"columnProperties":{"University.Multiple Bachelor's Degrees":{"displayName":"Multiple Degrees"}},"drillFilterOtherVisuals":true,"hasDefaultSort":true,"objects":{"general":[{"properties":{"filter":{"filter":{"Version":2,"From":[{"Name":"u","Entity":"University"}],"Where":[{"Condition":{"Not":{"Expression":{"In":{"Expressions":[{"Column":{"Expression":{"SourceRef":{"Source":"u"}},"Property":"Multiple Bachelor's Degrees"}}],"Values":[[{"Literal":{"Value":"'No'"}}]]}}}}}]}},"persist":{"expr":{"Literal":{"Value":"'{\"order\":[\"___TOP___\",\"Gender^0\",\"Multiple Degrees^3\",\"Age^1\"]}'"}}}}}],"displaySettings":[{"properties":{"color2":{"solid":{"color":{"expr":{"Literal":{"Value":"'#F61C85'"}}}}},"labelcolor":{"solid":{"color":{"expr":{"Literal":{"Value":"'#0C907D'"}}}}},"top":{"expr":{"Literal":{"Value":"'Everyone In Sample'"}}},"color1":{"solid":{"color":{"expr":{"Literal":{"Value":"'#5651FF'"}}}}},"labeltextcolor":{"solid":{"color":{"expr":{"ThemeDataColor":{"ColorId":0,"Percent":0}}}}},"color3":{"solid":{"color":{"expr":{"ThemeDataColor":{"ColorId":1,"Percent":0}}}}},"color4":{"solid":{"color":{"expr":{"Literal":{"Value":"'#5651FF'"}}}}}}}]},"vcObjects":{"title":[{"properties":{"show":{"expr":{"Literal":{"Value":"false"}}}}}],"general":[{"properties":{"altText":{"expr":{"Literal":{"Value":"''"}}}}}]}}},"filters":"[]"},{"x":465.5655430711611,"y":541.0280898876405,"z":3000,"width":107.43820224719101,"height":88.25280898876404,"config":{"name":"6ca16fc0bac993a54436","layouts":[{"id":0,"position":{"x":465.5655430711611,"y":541.0280898876405,"z":3000,"width":107.43820224719101,"height":88.25280898876404}}],"singleVisual":{"visualType":"card","projections":{"Values":[{"queryRef":"CountNonNull(University.PersonID)"}]},"prototypeQuery":{"Version":2,"From":[{"Name":"u","Entity":"University"}],"Select":[{"Aggregation":{"Expression":{"Column":{"Expression":{"SourceRef":{"Source":"u"}},"Property":"PersonID"}},"Function":5},"Name":"CountNonNull(University.PersonID)"}],"OrderBy":[{"Direction":2,"Expression":{"Aggregation":{"Expression":{"Column":{"Expression":{"SourceRef":{"Source":"u"}},"Property":"PersonID"}},"Function":5}}}]},"columnProperties":{"CountNonNull(University.PersonID)":{"displayName":"of 511"}},"drillFilterOtherVisuals":true,"hasDefaultSort":true,"objects":{"categoryLabels":[{"properties":{"color":{"solid":{"color":{"expr":{"ThemeDataColor":{"ColorId":1,"Percent":0}}}}},"fontSize":{"expr":{"Literal":{"Value":"'14'"}}},"fontFamily":{"expr":{"Literal":{"Value":"'''Segoe UI Light'', wf_segoe-ui_light, helvetica, arial, sans-serif'"}}}}}],"labels":[{"properties":{"fontSize":{"expr":{"Literal":{"Value":"'34'"}}},"preserveWhitespace":{"expr":{"Literal":{"Value":"true"}}},"fontFamily":{"expr":{"Literal":{"Value":"'''Segoe UI'', wf_segoe-ui_normal, helvetica, arial, sans-serif'"}}},"color":{"solid":{"color":{"expr":{"Literal":{"Value":"'#0C907D'"}}}}}}}]}}},"filters":"[]"},{"x":631.8389513108615,"y":0,"z":1000,"width":734.1610486891386,"height":351.7322097378277,"config":{"name":"55cba53ca736607c4817","layouts":[{"id":0,"position":{"x":631.8389513108615,"y":0,"z":1000,"width":734.1610486891386,"height":351.7322097378277}}],"singleVisual":{"visualType":"image","drillFilterOtherVisuals":true,"objects":{"general":[{"properties":{"imageUrl":{"expr":{"ResourcePackageItem":{"PackageName":"RegisteredResources","PackageType":1,"ItemName":"Hero08936808817285424.png"}}}}}]}}},"filters":"[]"},{"x":683,"y":383.70786516853934,"z":2000,"width":629.2808988764045,"height":383.70786516853934,"config":{"name":"d7cc8b4b76ea30ba70ba","layouts":[{"id":0,"position":{"x":683,"y":383.70786516853934,"z":2000,"width":629.2808988764045,"height":383.70786516853934}}],"singleVisual":{"visualType":"textbox","drillFilterOtherVisuals":true,"objects":{"general":[{"properties":{"paragraphs":[{"textRuns":[{"value":"The example on the top left is the Tassels Parallel Sets Slicer, configured to show Gender, Age and Multiple Degree status. The Multiple degree field has \"No\" toggled off, so that is filtered from the data that flows downwards. This filter is also active on the report page, filtering the bar chart example below. Play around with the visual by clicking on the green category bars on the visual to slice them on/off and see how the data is filtered in the below chart.","textStyle":{"fontFamily":"Segoe UI","fontSize":"20px","color":"#808080"}}]},{"textRuns":[{"value":""}]},{"textRuns":[{"value":"The additional tabs display various other features of the visual and geenral tips on usage.","textStyle":{"fontFamily":"Segoe UI","fontSize":"20px","color":"#808080"}}]},{"textRuns":[{"value":""}]},{"textRuns":[{"value":"For more information visit: ","textStyle":{"fontFamily":"Segoe UI","fontSize":"20px","color":"#808080"}},{"value":"https:www.wishyoulization.com/","textStyle":{"fontFamily":"Segoe UI","fontSize":"20px","color":"#808080"},"url":"http://https:www.wishyoulization.com/"}]}]}}]}}},"filters":"[]"}],"config":{"relationships":[{"source":"5825b95544b01205441c","target":"12df8e3cacaec032109b","type":1}],"objects":{"outspacePane":[{"properties":{"width":{"expr":{"Literal":{"Value":"201L"}}}}}]}},"displayOption":1,"width":1366,"height":768}
