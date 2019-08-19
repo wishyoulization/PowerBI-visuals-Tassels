@@ -5,7 +5,7 @@
         "guid": "wishyoulizationtassels",
         "visualClassName": "Visual",
         "version": "1.0.0",
-        "description": "A parallel sets based visual slicer to see the data tasseled by ordinal groups.",
+        "description": "A parallel sets based visual slicer to interactively explore the data tasseled (sankey flows tied like a curtain tassel) by ordinal groups.",
         "supportUrl": "https://www.wishyoulization.com/powerbi",
         "gitHubUrl": "https://github.com/wishyoulization/PowerBI-visuals-Tassels"
     },
