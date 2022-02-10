@@ -16,7 +16,7 @@
     "@babel/preset-react": "^7.0.0",
     "babel-loader": "^8.0.6",
     "css-loader": "^0.28.11",
-    "node-sass": "^4.13.1",
+    "node-sass": "^7.0.0",
     "react-hot-loader": "^4.12.11",
     "sass-loader": "^6.0.7",
     "style-loader": "^0.20.3",
